@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>QUIZIFY</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#f5f3ff;--card:#fff;--tx:#1e1b4b;--mu:#6b7280;--p:#7c3aed;--b:#2563eb;--ok:#16a34a;--no:#dc2626;--bd:#e5e7eb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14112b;--card:#1f1b3d;--tx:#ede9fe;--mu:#a1a1c5;--bd:#3b3566}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(90deg,var(--p),var(--b));color:#fff;flex-wrap:wrap}
+.logo{font-weight:800;font-size:22px;letter-spacing:1px}nav{display:flex;gap:6px;flex-wrap:wrap}
+nav button{background:rgba(255,255,255,.18);color:#fff;border:0;padding:8px 14px;border-radius:20px;cursor:pointer;font-size:14px}
+main{max-width:860px;margin:0 auto;padding:20px}
+.card{background:var(--card);border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 4px 18px rgba(80,50,160,.1);animation:in .3s}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+h1,h2,h3{margin:.2em 0 .5em}.mu{color:var(--mu);font-size:14px}
+.btn{background:linear-gradient(90deg,var(--p),var(--b));color:#fff;border:0;padding:11px 20px;border-radius:24px;cursor:pointer;font-size:15px;font-weight:600}
+.btn.alt{background:transparent;color:var(--p);border:2px solid var(--p)}.btn.sm{padding:6px 12px;font-size:13px}.btn[disabled]{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.stat{text-align:center;padding:14px;border-radius:14px;background:var(--bg)}.stat b{font-size:28px;display:block;color:var(--p)}
+input,textarea,select{width:100%;padding:10px 12px;border:2px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);font:inherit}
+textarea{min-height:200px;resize:vertical}label{font-size:13px;color:var(--mu);display:block;margin:10px 0 4px}
+.drop{border:3px dashed var(--p);border-radius:18px;padding:28px;text-align:center;cursor:pointer}.drop.on{background:var(--bg)}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--p),var(--b));width:0;transition:width .3s}
+.ch{display:block;width:100%;text-align:left;margin:8px 0;padding:13px 16px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx);font-size:16px;cursor:pointer}
+.ch:hover:not([disabled]){border-color:var(--p)}.ch.ok{border-color:var(--ok);background:rgba(22,163,74,.15)}.ch.no{border-color:var(--no);background:rgba(220,38,38,.15)}
+.err{color:var(--no);font-size:14px;margin:8px 0}.sp{display:inline-block;width:18px;height:18px;border:3px solid var(--bd);border-top-color:var(--p);border-radius:50%;animation:r 1s linear infinite;vertical-align:middle}@keyframes r{to{transform:rotate(360deg)}}
+.item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}.hide{display:none}
+.rev{border-left:5px solid var(--bd);padding:8px 12px;margin:12px 0}.rev.ok{border-color:var(--ok)}.rev.no{border-color:var(--no)}
+:root,:root:not([data-theme="light"]){--bg:#140f3a;--card:#f1edff;--tx:#1e1b4b;--mu:#6b6890;--bd:#d9d2f7}
+body{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh;color:#fff;background:radial-gradient(circle at 70% 0,#3b1c8c,#140f3a 55%) fixed}
+header{flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;background:#0f0b2e;border-right:1px solid #2a2260;padding:22px 16px;gap:22px;position:sticky;top:0;height:100vh}
+.logo{font-size:32px;letter-spacing:0;color:#fff}nav{flex-direction:column;gap:8px}
+nav button{text-align:left;padding:13px 18px;border-radius:14px;font-size:16px;background:transparent}nav button.on{background:#7c3aed;font-weight:700}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 28px 0}.top input{max-width:520px;border-radius:30px;background:rgba(255,255,255,.07);color:#fff;border:1px solid #3b3480}
+.user{white-space:nowrap;font-weight:600}main{max-width:1150px;margin:0}
+.card{color:var(--tx)}.stat{background:#e4dcff}
+.hero{position:relative;min-height:210px}.hero h1{font-size:68px;margin:0;font-weight:900;letter-spacing:-2px}.hero h1 span{color:#a78bfa}.tag{font-size:26px;font-style:italic;font-weight:800;margin:4px 0 10px}.deco{position:absolute;right:2%;top:0;font-size:96px;filter:drop-shadow(0 8px 20px #7c3aed)}
+.hrow{display:grid;grid-template-columns:1.3fr auto 1.2fr .8fr;align-items:stretch;margin-bottom:16px}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.or{align-self:center;background:#7c3aed;color:#fff;border-radius:50%;width:54px;height:54px;display:grid;place-items:center;font-weight:800;margin:0 -14px;z-index:2;border:4px solid #140f3a}
+.chip{background:#ddd5ff;color:#6d28d9;padding:4px 10px;border-radius:8px;font-size:13px;font-weight:700}
+.badge{padding:4px 14px;border-radius:14px;font-weight:700;font-size:14px;background:#bbf7d0;color:#166534}.badge.m{background:#fde68a;color:#92400e}.badge.l{background:#fecaca;color:#991b1b}
+.pl{width:34px;height:34px;border-radius:50%;background:#1e1b4b;color:#fff;border:0;cursor:pointer}
+.dk{background:linear-gradient(160deg,#2a1b6e,#1a1250);color:#fff;border:1px solid #4b3aa8}.dk b{font-size:42px;display:block}
+@media(max-width:900px){body{display:block}header{position:static;height:auto;border-right:0;gap:10px}nav{flex-direction:row;flex-wrap:wrap}.hrow,.two{grid-template-columns:1fr}.or{margin:-10px auto;position:relative}.dk{margin:16px 0 0!important}.deco{display:none}.hero h1{font-size:48px}.top{padding:14px 16px 0}}
+</style></head><body>
+<header><div><div style="font-size:44px;text-align:center">🧠🎮</div><div class="logo" style="text-align:center">Quiz<span style="color:#a78bfa">ify</span></div><div style="text-align:center;font-size:11px;opacity:.6">version 13</div></div>
+<nav id="nav" class="hide"><button data-v="home" onclick="go('home')">🏠 Home</button><button data-v="upload" onclick="go('upload')">☁️ Upload Lesson</button><button data-v="type" onclick="go('type')">⌨️ Type Lesson</button><button data-v="mine" onclick="go('mine')">📋 My Quizzes</button></nav></header>
+<div class="wrap"><div class="top hide" id="top"><input id="gs" placeholder="Search your quizzes… (press Enter)"><div class="user"><button class="btn sm alt" style="color:#fff;border-color:#a78bfa" onclick="snd=!snd;this.textContent=snd?'🔊':'🔇'">🔊</button> <span id="un"></span></div></div><main id="app"></main></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let db=null,sample=null,uid=null,me='',quizzes=[],acts=[],lesson={title:'',text:'',file:''},cfg={n:10,diff:'Medium',type:'Mixed'},G=null,signed=false;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+async function boot(){
+ try{const u=await claude.use('user');if(u){uid=await u.id();try{const m=await u.me();me=m&&m.name||''}catch(e){}}}catch(e){}
+ try{db=await claude.use('db')}catch(e){} try{sample=await claude.use('sample')}catch(e){}
+ signed=true;go('home')}
+async function load(){if(!db||!uid)return;quizzes=[];acts=[];
+ try{const s=await db.collection('data/users/'+uid+'/quizzes').get();quizzes=s.docs.map(d=>d.data()).sort((a,b)=>b.created-a.created);
+ const a=await db.doc('data/users/'+uid+'/meta/acts').get();acts=a.exists?(a.data().list||[]):[]}catch(e){err('Could not load saved quizzes: '+(e.message||e))}}
+function err(m){const e=$('#err');if(e)e.textContent=m}
+const saveQ=q=>db?db.doc('data/users/'+uid+'/quizzes/'+q.id).set(q):Promise.resolve();
+async function act(t){acts.unshift({t,at:Date.now()});acts=acts.slice(0,8);if(db)try{await db.doc('data/users/'+uid+'/meta/acts').set({list:acts})}catch(e){}}
+function signout(){signed=false;$('#nav').classList.add('hide');go('login')}
+async function go(v,x){
+ if(!signed&&v!=='login')v='login';
+ $('#nav').classList.toggle('hide',!signed);$('#top').classList.toggle('hide',!signed);$('#un').textContent=me;document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+ if(signed&&['home','mine'].includes(v))await load();
+ ({login,home,upload,type:typeV,mine,play,result,review,settings})[v](x)}
+function login(){app.innerHTML=`<div class="card" style="max-width:440px;margin:40px auto;text-align:center"><h1>Welcome to QUIZIFY</h1><p class="mu">Sign in to open your saved quizzes and lessons.</p>
+<p>${uid?'Your claude.ai account is ready.':'<b>No account detected.</b> Open this page while signed in to claude.ai to save quizzes.'}</p>
+<button class="btn" id="si">${uid?'Sign in / Register automatically':'Continue without saving'}</button><p class="mu">First visit? Your account is created the moment you sign in. Your quizzes are stored privately for your account.</p></div>`;
+ $('#si').onclick=()=>{signed=true;go('home')}}
+function homeOld(){const tot=quizzes.length,plays=quizzes.reduce((s,q)=>s+(q.scores||[]).length,0);
+ app.innerHTML=`<div class="card"><h2>Welcome${me?', '+esc(me):''}! 👋</h2><p class="mu">Upload a PowerPoint or PDF, or type a lesson. Quizify turns it into a quiz.</p><div class="row"><button class="btn" onclick="go('upload')">Upload Lesson</button><button class="btn alt" onclick="go('type')">Type Your Lesson</button></div></div>
+<div class="grid"><div class="stat"><b>${tot}</b>Quizzes Generated</div><div class="stat"><b>${plays}</b>Times Played</div></div><br>
+<div class="card"><h3>My Quizzes</h3>${quizzes.slice(0,3).map(q=>`<div class="item"><span>${esc(q.title)}</span><button class="btn sm" onclick="startQ('${q.id}')">Play</button></div>`).join('')||'<p class="mu">Nothing yet.</p>'}<button class="btn alt sm" onclick="go('mine')">See all</button></div>
+<div class="card"><h3>Recent Activities</h3>${acts.map(a=>`<div class="item"><span>${esc(a.t)}</span><span class="mu">${new Date(a.at).toLocaleString()}</span></div>`).join('')||'<p class="mu">No activity yet.</p>'}</div>`}
+function home(){const tot=quizzes.length,bd=p=>`<span class="badge ${p>=85?'':p>=60?'m':'l'}">${p}%</span>`,ago=t=>{const m=Math.floor((Date.now()-t)/6e4);return m<1?'just now':m<60?m+' min ago':m<1440?Math.floor(m/60)+' h ago':new Date(t).toLocaleDateString()};
+ app.innerHTML=`<div class="hero"><div class="deco">🏆🎮</div><h1>Quiz<span>ify</span></h1><div class="tag">Turn Your Lessons Into <span style="color:#e879f9">Fun Quiz Games!</span></div><p style="max-width:460px;font-size:17px">Upload your PowerPoint and let AI create your quiz automatically.</p></div>
+<div class="hrow"><div class="card" style="margin:0"><div class="drop" id="dz"><h3>☁️ Upload Your Lesson</h3><p class="mu">Drag &amp; drop your PowerPoint here</p><div class="row" style="justify-content:center"><span class="chip">.pptx</span><span class="chip">.ppt</span></div><br><button class="btn" id="cf">📂 Upload PPT</button><input type="file" id="hf" class="hide" accept=".pptx,.ppt"></div></div>
+<div class="or">OR</div><div class="card" style="margin:0"><h3>⌨️ Type Your Lesson</h3><p class="mu">Paste or type your study material</p><input id="hq" placeholder="Enter your lesson here…"><br><br><button class="btn" id="hg">✨ Generate Quiz</button></div>
+<div class="card dk" style="margin:0 0 0 16px"><b>${tot}</b>Quizzes Generated<p>🏆 Keep Learning, Keep Winning!</p></div></div>
+<div class="two"><div class="card"><div class="row" style="justify-content:space-between"><h3>⭐ My Quizzes</h3><button class="btn alt sm" onclick="go('mine')">View All →</button></div>${quizzes.slice(0,3).map(q=>{const s=q.scores||[];return `<div class="item"><span>📘 <b>${esc(q.title)}</b><br><span class="mu">${q.questions.length} Questions • ${q.diff||'—'}</span></span><span class="row">${s.length?bd(s[s.length-1].pct):''}<button class="pl" onclick="startQ('${q.id}')">▶</button></span></div>`}).join('')||'<p class="mu">No quizzes yet — create your first one!</p>'}</div>
+<div class="card"><h3>⚡ Recent Activity</h3>${acts.slice(0,4).map(a=>{const m=a.t.match(/(\d+)%/);return `<div class="item"><span>${esc(a.t)}<br><span class="mu">${ago(a.at)}</span></span>${m?bd(+m[1]):''}</div>`}).join('')||'<p class="mu">No activity yet.</p>'}</div></div>`;
+ const pick=async f=>{if(!f)return;await go('upload');ingest(f)},dz=$('#dz');
+ $('#cf').onclick=()=>$('#hf').click();$('#hf').onchange=e=>pick(e.target.files[0]);dz.ondragover=e=>{e.preventDefault();dz.classList.add('on')};dz.ondragleave=()=>dz.classList.remove('on');dz.ondrop=e=>{e.preventDefault();dz.classList.remove('on');pick(e.dataTransfer.files[0])};
+ $('#hg').onclick=()=>{const t=$('#hq').value.trim();lesson={title:'Untitled Lesson',text:t,file:''};go(t.length<40?'type':'settings')}}
+function upload(){app.innerHTML=`<div class="card"><h2>Upload Lesson</h2><div class="drop" id="dz"><p><b>Drag &amp; drop</b> a .pptx, .pdf or .txt file here</p><button class="btn sm" onclick="$('#f').click()">Browse files</button><input type="file" id="f" class="hide" accept=".pptx,.ppt,.pdf,.txt"></div>
+<div id="st" class="mu"></div><div class="bar" style="margin-top:8px"><i id="pb"></i></div><div id="err" class="err"></div><div id="pv"></div></div>`;
+ const dz=$('#dz');dz.ondragover=e=>{e.preventDefault();dz.classList.add('on')};dz.ondragleave=()=>dz.classList.remove('on');
+ dz.ondrop=e=>{e.preventDefault();dz.classList.remove('on');ingest(e.dataTransfer.files[0])};$('#f').onchange=e=>ingest(e.target.files[0]);
+ if(lesson.file)preview()}
+function prog(p,t){const b=$('#pb');if(b)b.style.width=p+'%';const s=$('#st');if(s&&t)s.innerHTML=t}
+async function ingest(f){if(!f)return;err('');lesson={title:f.name.replace(/\.[^.]+$/,''),text:'',file:''};
+ const ext=(f.name.split('.').pop()||'').toLowerCase();prog(5,'Reading <b>'+esc(f.name)+'</b>…');
+ try{let t='';
+  if(ext==='txt')t=await f.text();
+  else if(ext==='pdf'){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+   const d=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;for(let i=1;i<=d.numPages;i++){const c=await(await d.getPage(i)).getTextContent();t+=c.items.map(x=>x.str).join(' ')+'\n';prog(5+90*i/d.numPages)}}
+  else if(ext==='pptx'){const z=await JSZip.loadAsync(await f.arrayBuffer());const names=Object.keys(z.files).filter(n=>/^ppt\/slides\/slide\d+\.xml$/.test(n)).sort((a,b)=>a.match(/\d+/)[0]-b.match(/\d+/)[0]);
+   for(let i=0;i<names.length;i++){const x=await z.file(names[i]).async('string');t+=[...x.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map(m=>m[1]).join(' ')+'\n';prog(5+90*(i+1)/names.length)}
+   t=t.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'")}
+  else if(ext==='ppt'){const b=new Uint8Array(await f.arrayBuffer()),dv=new DataView(b.buffer);for(let i=0;i+8<b.length;i++){const ty=b[i+2]|b[i+3]<<8;if(ty!==0x0FA0&&ty!==0x0FA8)continue;const L=dv.getUint32(i+4,true);if(L<2||L>200000||i+8+L>b.length)continue;let s=ty===0x0FA0?new TextDecoder('utf-16le').decode(b.subarray(i+8,i+8+L-(L%2))):new TextDecoder('windows-1252').decode(b.subarray(i+8,i+8+L));s=s.replace(/[\r\v]/g,'\n');if(/[\x00-\x08\x0e-\x1f]/.test(s)||s.trim().length<3)continue;t+=s+'\n';i+=7+L}if(!t.trim())throw new Error('Could not read text from this old .ppt file. Open it in PowerPoint, Save As .pptx, then upload again.');prog(90)}
+  else throw new Error('Unsupported file type. Use .pptx, .pdf or .txt.');
+  t=t.replace(/[ \t]+/g,' ').trim();if(t.length<40)throw new Error('No readable text found in this file (scanned images aren’t supported).');
+  lesson.text=t;lesson.file=f.name;prog(100,'Loaded <b>'+esc(f.name)+'</b>');go('settings')}
+ catch(e){prog(0,'');err(e.message||String(e))}}
+function preview(){$('#pv').innerHTML=`<h3>Preview (${lesson.text.length.toLocaleString()} characters)</h3><textarea id="pt" style="min-height:120px" readonly>${esc(lesson.text.slice(0,2500))}</textarea><div class="row" style="margin-top:10px"><button class="btn" onclick="go('settings')">Continue</button><button class="btn alt" onclick="$('#f').click()">Replace file</button><button class="btn alt" onclick="lesson={title:'',text:'',file:''};go('upload')">Remove</button></div>`}
+function typeV(){app.innerHTML=`<div class="card"><h2>Type Your Lesson</h2><label>Lesson title</label><input id="lt" value="${esc(lesson.title)}" placeholder="e.g. Photosynthesis"><label>Lesson content</label><textarea id="tx" placeholder="Type or paste your lesson here…">${esc(lesson.text)}</textarea><div id="err" class="err"></div>
+<div class="row"><button class="btn" id="nx">Continue</button><button class="btn alt" onclick="$('#tx').value='';$('#lt').value=''">Clear</button></div></div>`;
+ $('#nx').onclick=()=>{const t=$('#tx').value.trim();if(t.length<40)return err('Please enter at least a few sentences of lesson content.');lesson={title:$('#lt').value.trim()||'Untitled Lesson',text:t,file:''};go('settings')}}
+function settings(){if(!lesson.text)return go('home');
+ const sel=(id,opts,v)=>`<select id="${id}">${opts.map(o=>`<option ${o==v?'selected':''}>${o}</option>`).join('')}</select>`;
+ app.innerHTML=`<div class="card"><h2>Quiz Settings</h2><p class="mu">Lesson: <b>${esc(lesson.title)}</b></p><label>Number of questions</label><input id="n" type="number" min="1" step="1" inputmode="numeric" placeholder="Type how many questions" value="${cfg.n}"><label>Difficulty</label>${sel('d',['Easy','Medium','Hard'],cfg.diff)}<label>Question types</label>${sel('t',['Multiple Choice','True or False','Identification','Fill in the Blank','Matching Type','Mixed'],cfg.type)}
+<div id="err" class="err"></div><div class="row"><button class="btn" id="gen">Generate Quiz</button><span id="ld"></span></div></div>`;
+ $('#gen').onclick=()=>generate(false)}
+async function generate(auto){if(auto){app.innerHTML='<div class="card" style="text-align:center;max-width:520px;margin:40px auto"><div style="font-size:54px;animation:r 2s linear infinite;display:inline-block">🧠</div><h2>Analyzing your presentation…</h2><p class="mu">Reading every slide and writing your quiz.</p><div id="ld"></div><div id="err" class="err"></div><button class="btn alt hide" id="rt" onclick="generate(true)">Try again</button></div>'}else{const raw=parseInt($('#n').value,10);if(!raw||raw<1)return err('Please type how many questions you want (1 or more).');cfg={n:Math.min(500,raw),diff:$('#d').value,type:$('#t').value,tm:0}};err('');
+
+ const btn=$('#gen')||{};btn.disabled=true;$('#ld').innerHTML='<span class="sp"></span> Generating your quiz…';
+ const tp={'Multiple Choice':'all "mc"','True or False':'all "tf"','Identification':'all "id"','Fill in the Blank':'all "fb" (q contains _____ and answer is the missing term)','Matching Type':'all "match" (each with "pairs":[{"l":"term","r":"definition"}] of exactly 4 pairs and answer "match")','Mixed':'a mix of "mc", "tf", "id", "fb" (fill in the blank: q contains _____ and answer is the missing term) and one or two "match" (add "pairs":[{"l":"term","r":"definition"}] with exactly 4 pairs; set answer to "match")'}[cfg.type];
+ const mk=(cnt,ex)=>`Create a quiz strictly from the lesson below. Exactly ${cnt} ${ex&&ex.length?'NEW ':''}questions, difficulty ${cfg.diff}, types: ${tp}.
+Return ONLY JSON: {"questions":[{"type":"mc|tf|id|fb|match","q":"question","choices":["4 options for mc","[\\"True\\",\\"False\\"] for tf","[] for id"],"answer":"exact text of the correct choice, or the short correct answer for id","explanation":"one sentence"}]}
+Rules: for mc, 4 distinct believable choices and the answer must equal one of them; only use facts in the lesson.
+LESSON TITLE: ${lesson.title}
+LESSON:
+${lesson.text.slice(0,30000)}${ex&&ex.length?'\n\nDo NOT repeat or rephrase any of these existing questions:\n'+ex.map(x=>'- '+x.q).join('\n'):''}`;
+ try{let qs,note='';const ai=async prompt=>{let r;if(sample)r=await sample.json(prompt,{cache:false,modelTier:'default'});else{let ok=false;try{const resp=await fetch('/api/generate',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt})});if(resp.ok&&/json/.test(resp.headers.get('content-type')||'')){r=await resp.json();ok=true}}catch(e){}
+if(!ok){const resp=await fetch('https://text.pollinations.ai/openai',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({model:'openai',messages:[{role:'system',content:'You output only valid JSON.'},{role:'user',content:prompt}],jsonMode:true})});if(!resp.ok)throw new Error('Free AI service error '+resp.status);const j=await resp.json(),tx=j.choices[0].message.content;r=JSON.parse(tx.slice(tx.indexOf('{'),tx.lastIndexOf('}')+1))}}return r},valid=r=>(r.questions||[]).filter(q=>q&&q.q&&(q.answer||q.type==='match')&&['mc','tf','id','fb','match'].includes(q.type)&&(q.type!=='mc'||(q.choices||[]).includes(q.answer))&&(q.type!=='match'||((q.pairs||[]).length>=3&&(q.answer='match'))));
+  try{qs=[];const seen=new Set(),nk=t=>String(t).toLowerCase().replace(/\s+/g,' ').trim();let fails=0,lastErr;
+   for(let k=0;qs.length<cfg.n&&k<Math.ceil(cfg.n/10)+8&&fails<3;k++){try{const need=Math.min(15,cfg.n-qs.length);
+    if(k>0)$('#ld').innerHTML='<span class="sp"></span> Generated '+qs.length+' of '+cfg.n+'…';
+    const got=valid(await ai(mk(need,qs.slice(-80))));let added=0;
+    for(const x of got){if(qs.length>=cfg.n)break;const key=nk(x.q);if(seen.has(key))continue;seen.add(key);qs.push(x);added++}
+    fails=added?0:fails+1}catch(e){lastErr=e;fails++}}
+   if(!qs.length)throw lastErr||new Error('The AI returned no usable questions.')}catch(e){qs=offline(lesson.text,cfg);note='AI was unavailable ('+(e.message||e.code||e)+'). This quiz was made by the built-in offline generator (fill-in-the-blank and true/false from your lesson sentences), not by AI.';if(!qs.length)throw new Error('Not enough lesson text to make questions.')}
+  if(qs.length<cfg.n){const ex=offline(lesson.text,{...cfg,n:cfg.n-qs.length});if(ex.length){qs=qs.concat(ex);note=note||'Some questions were added by the offline generator to reach your number.'}}
+  if(qs.length<cfg.n)note=(note?note+' ':'')+'Your lesson only had enough content for '+qs.length+' questions.';
+  const q={id:'q'+Date.now(),title:lesson.title,file:lesson.file,src:lesson.text.slice(0,30000),created:Date.now(),questions:qs.slice(0,cfg.n),tm:cfg.tm,diff:cfg.diff,scores:[]};
+  try{await saveQ(q)}catch(e){note=(note?note+' ':'')+'The quiz could not be saved to your account ('+(e.message||e.code||e)+'), but you can still play it.'}q.note=note;quizzes.unshift(q);await act('Generated quiz “'+q.title+'”');startQ(q.id)}
+ catch(e){btn.disabled=false;$('#ld').innerHTML='';if($('#rt'))$('#rt').classList.remove('hide');err('Quiz generation failed: '+(e.message||e.code||e)+(e.code==='not_granted'?' — please allow the AI permission.':'')+' No quiz was created.')}}
+function offline(t,c){
+ const SW=new Set('the and are was were been this that these those with for from which who whom his her their its has have had not but can will would should could may also than then into about over such when where there they them your you our what how why all any each more most some other only very just'.split(' '));
+ const ss=(t.replace(/\s+/g,' ').match(/[^.!?\n]+[.!?]?/g)||[]).map(s=>s.trim()).filter(s=>{const n=s.split(' ').length;return n>=6&&n<=40&&!/reveal answer|back to board/i.test(s)});
+ const terms=[...new Set((t.match(/[A-Za-z][A-Za-z-]{4,}/g)||[]).filter(w=>!SW.has(w.toLowerCase())))];
+ if(ss.length<2||terms.length<5)return[];
+ const key=(s,r)=>[...new Set((s.match(/[A-Za-z][A-Za-z-]{4,}/g)||[]).filter(x=>!SW.has(x.toLowerCase())))].sort((a,b)=>b.length-a.length)[r||0];
+ const pool=shuffle(ss),out=[],ty0=c.type==='Multiple Choice'?['mc']:c.type==='True or False'?['tf']:c.type==='Identification'?['id']:['mc','tf','id'];
+ const seen=new Set();for(let i=0;out.length<c.n&&i<pool.length*40;i++){const s=pool[i%pool.length],k=key(s,Math.floor(i/pool.length));if(!k)continue;const ty=ty0[out.length%ty0.length],sk=s+'|'+k+'|'+ty;if(seen.has(sk))continue;seen.add(sk);
+  const wrong=shuffle(terms.filter(w=>w.toLowerCase()!==k.toLowerCase())),blank=s.replace(k,'_____');
+  if(ty==='mc')out.push({type:'mc',q:'Fill in the blank: '+blank,choices:shuffle([k,...wrong.slice(0,3)]),answer:k,explanation:s});
+  else if(ty==='id')out.push({type:'id',q:'Identify the missing word: '+blank,choices:[],answer:k,explanation:s});
+  else{const f=Math.random()<.5;out.push({type:'tf',q:'True or False: '+(f?s.replace(k,wrong[0]):s),choices:['True','False'],answer:f?'False':'True',explanation:'Original: '+s})}}
+ return out}
+let snd=true;function sfx(ok){if(!snd)return;try{const c=sfx.c||(sfx.c=new(window.AudioContext||window.webkitAudioContext)()),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=ok?660:200;o.type=ok?'sine':'sawtooth';g.gain.value=.08;o.start();o.stop(c.currentTime+.15)}catch(e){}}
+function autoGen(){cfg={n:Math.max(10,Math.min(20,Math.round(lesson.text.length/500))),diff:'Medium',type:'Mixed',tm:0};generate(true)}
+function regen(id){const q=quizzes.find(x=>x.id===id);if(!q||!q.src)return alert('The lesson text for this quiz was not saved.');lesson={title:q.title,text:q.src,file:q.file||''};go('settings')}
+function modesV(q){const M=[['classic','🎯','Classic Mode','Answer one by one and see the correct answer.'],['time','⏱️','Time Challenge','20 seconds per question. Faster answers earn bonus points.'],['survival','💀','Survival Mode','The game ends after 3 wrong answers.'],['practice','📖','Practice Mode','No time limit. Learn from every explanation.']];
+ app.innerHTML=`<div class="card"><h2>Choose a game mode</h2><p class="mu">${esc(q.title)} · ${q.questions.length} questions</p>${q.note?'<p class="mu">'+esc(q.note)+'</p>':''}<div class="grid">${M.map(m=>`<button class="ch" style="text-align:center" onclick="startQ('${q.id}','${m[0]}')"><div style="font-size:34px">${m[1]}</div><b>${m[2]}</b><div class="mu">${m[3]}</div></button>`).join('')}</div></div>`}
+function startQ(id,mode){const q=quizzes.find(x=>x.id===id);if(!q)return;if(!mode)return modesV(q);
+ G={q,qs:shuffle(q.questions).map(x=>({...x,choices:x.type==='mc'?shuffle(x.choices):x.choices,ua:null})),i:0,t0:Date.now(),tl:0,iv:null,mode,pts:0,lives:3,qt:Date.now()};go('play')}
+function play(){const g=G,x=g.qs[g.i],n=g.qs.length;clearInterval(g.iv);if(x.ua===null)g.qt=Date.now();
+ const done=x.ua!==null,sc=g.qs.filter(a=>a.ua!==null&&a.ok).length;
+ app.innerHTML=`<div class="card"><div class="row" style="justify-content:space-between"><b>Question ${g.i+1} of ${n}</b><span>${g.mode==='time'?g.pts+' pts':'Score: '+sc} ${g.mode==='survival'?'❤️'.repeat(Math.max(0,g.lives)):''}</span><span id="tl" class="mu"></span></div><div class="bar"><i style="width:${(g.qs.filter(a=>a.ua!==null).length/n)*100}%"></i></div>
+<h2 style="margin-top:18px">${esc(x.q)}</h2><div id="ans"></div><div id="fb"></div><div class="row" style="margin-top:14px"><button class="btn alt" id="pv" ${g.i?'':'disabled'}>Previous</button><button class="btn" id="nx">${g.i===n-1?'Finish':'Next Question'}</button></div></div>`;
+ const A=$('#ans');
+ if(x.type==='match'){const rs=x.rs||(x.rs=shuffle(x.pairs.map(p=>p.r)));A.innerHTML=x.pairs.map((p,i)=>`<label>${esc(p.l)}</label><select class="ms" ${done?'disabled':''}><option value="">Choose…</option>${rs.map(r=>`<option ${done&&x.sel&&x.sel[i]===r?'selected':''}>${esc(r)}</option>`).join('')}</select>`).join('')+(done?'':'<button class="btn sm" id="sb" style="margin-top:10px">Submit</button>');if(!done)$('#sb').onclick=()=>{const v=[...document.querySelectorAll('.ms')].map(s=>s.value);if(v.includes(''))return;x.sel=v;ans(x.pairs.map((p,i)=>p.l+' → '+v[i]).join('; '))}}else if(x.type==='id'||x.type==='fb'){A.innerHTML=`<input id="ia" placeholder="Type your answer" ${done?'disabled value="'+esc(x.ua)+'"':''}><button class="btn sm" id="sb" style="margin-top:8px" ${done?'disabled':''}>Submit</button>`;if(!done)$('#sb').onclick=()=>ans($('#ia').value.trim())}
+ else A.innerHTML=x.choices.map((c,i)=>`<button class="ch" data-i="${i}" ${done?'disabled':''}>${esc(c)}</button>`).join('');
+ A.querySelectorAll('.ch').forEach(b=>b.onclick=()=>ans(x.choices[b.dataset.i]));
+ if(done)mark();
+ $('#pv').onclick=()=>{g.i--;play()};$('#nx').onclick=()=>{g.i===n-1||(g.mode==='survival'&&g.lives<=0)?finish():(g.i++,play())};
+ if(!done&&g.mode==='time'){g.tl=20;const t=$('#tl');t.textContent='⏱ '+g.tl;g.iv=setInterval(()=>{g.tl--;t.textContent='⏱ '+g.tl;if(g.tl<=0){clearInterval(g.iv);ans('(no answer)')}},1000)}}
+const cr=x=>x.type==='match'?x.pairs.map(p=>p.l+' → '+p.r).join('; '):x.answer;const norm=s=>String(s).toLowerCase().replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();
+function ans(v){const x=G.qs[G.i];if(x.ua!==null||((x.type==='id'||x.type==='fb')&&!v))return;clearInterval(G.iv);G.sec=(Date.now()-G.qt)/1000;x.ua=v;x.ok=x.type==='match'?x.pairs.every((p,i)=>x.sel&&x.sel[i]===p.r):(x.type==='id'||x.type==='fb')?(norm(v)===norm(x.answer)||(norm(v).length>3&&(norm(x.answer).includes(norm(v))||norm(v).includes(norm(x.answer))))):v===x.answer;if(x.ok)G.pts+=100+(G.mode==='time'?Math.max(0,Math.round(20-G.sec))*10:0);else if(G.mode==='survival')G.lives--;sfx(x.ok);play()}
+function mark(){const x=G.qs[G.i];document.querySelectorAll('.ch').forEach(b=>{const c=x.choices[b.dataset.i];if(c===x.answer)b.classList.add('ok');else if(c===x.ua)b.classList.add('no')});
+ $('#fb').innerHTML=`<p><b style="color:var(--${x.ok?'ok':'no'})">${x.ok?'Correct!':'Incorrect.'}</b> ${x.ok?'':'Answer: <b>'+esc(cr(x))+'</b>. '}${esc(x.explanation||'')}</p>`}
+async function finish(){clearInterval(G.iv);if(G.mode==='survival'&&G.lives<=0)G.qs=G.qs.filter(a=>a.ua!==null);const un=G.qs.filter(a=>a.ua===null).length;if(un&&!confirm(un+' question(s) unanswered. Finish anyway?'))return;
+ G.qs.forEach(a=>{if(a.ua===null){a.ua='(no answer)';a.ok=false}});G.secs=Math.round((Date.now()-G.t0)/1000);
+ const c=G.qs.filter(a=>a.ok).length,s={correct:c,total:G.qs.length,pct:Math.round(100*c/G.qs.length),secs:G.secs,at:Date.now()};
+ G.q.scores=(G.q.scores||[]).concat(s);G.s=s;try{await saveQ(G.q)}catch(e){}await act('Scored '+s.pct+'% on “'+G.q.title+'”');go('result')}
+function result(){const s=G.s,m=s.pct>=90?'Outstanding! 🏆':s.pct>=70?'Great job! 🎉':s.pct>=50?'Good effort — keep practicing! 💪':'Keep studying, you’ll get there! 📚';
+ app.innerHTML=`<div class="card" style="text-align:center"><h1>${s.pct}%</h1><p>${m}</p><div class="grid"><div class="stat"><b>${G.mode==='time'?G.pts+' pts':s.correct+'/'+s.total}</b>Score</div><div class="stat"><b>${s.correct}</b>Correct</div><div class="stat"><b>${s.total-s.correct}</b>Incorrect</div><div class="stat"><b>${Math.floor(s.secs/60)}m ${s.secs%60}s</b>Time</div></div><br>
+<div class="row" style="justify-content:center"><button class="btn" onclick="startQ('${G.q.id}','${G.mode}')">Play Again</button><button class="btn alt" onclick="go('review')">Review Answers</button><button class="btn alt" onclick="go('settings')">Generate Another Quiz</button><button class="btn alt" onclick="go('home')">Back to Dashboard</button></div></div>`}
+function review(){app.innerHTML=`<div class="card"><h2>Review Answers</h2>${G.qs.map((x,i)=>`<div class="rev ${x.ok?'ok':'no'}"><b>${i+1}. ${esc(x.q)}</b><br>Your answer: ${esc(x.ua)}<br>Correct answer: <b>${esc(cr(x))}</b><br><span class="mu">${esc(x.explanation||'')}</span></div>`).join('')}<button class="btn" onclick="go('result')">Back to results</button></div>`}
+function mine(){app.innerHTML=`<div class="card"><h2>My Quizzes</h2><input id="sq" placeholder="Search quizzes…"><div id="ls"></div></div>`;const draw=()=>{const k=$('#sq').value.toLowerCase(),l=quizzes.filter(q=>q.title.toLowerCase().includes(k));
+ $('#ls').innerHTML=l.map(q=>{const sc=q.scores||[],best=sc.length?Math.max(...sc.map(s=>s.pct))+'%':'—',last=sc.length?sc[sc.length-1].pct+'%':'—';return `<div class="item"><div><b>${esc(q.title)}</b><div class="mu">${q.file?'📎 '+esc(q.file)+' · ':''}${q.questions.length} questions · last ${last} · best ${best}</div></div><div class="row"><button class="btn sm" onclick="startQ('${q.id}')">Play</button><button class="btn alt sm" onclick="regen('${q.id}')">New quiz</button><button class="btn alt sm" onclick="ren('${q.id}')">Rename</button><button class="btn alt sm" onclick="del('${q.id}')">Delete</button></div></div>`}).join('')||'<p class="mu">No quizzes found.</p>'};$('#sq').value=window.preq||'';window.preq='';$('#sq').oninput=draw;draw()}
+async function ren(id){const q=quizzes.find(x=>x.id===id),n=prompt('New name',q.title);if(!n||!n.trim())return;q.title=n.trim();await saveQ(q);mine()}
+async function del(id){if(!confirm('Delete this quiz?'))return;if(db)try{await db.doc('data/users/'+uid+'/quizzes/'+id).delete()}catch(e){}quizzes=quizzes.filter(x=>x.id!==id);mine()}
+$('#gs').onkeydown=e=>{if(e.key==='Enter'){window.preq=e.target.value;go('mine')}};
+boot();
+</script></body></html>
